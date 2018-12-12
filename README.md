@@ -1,1 +1,1 @@
-# nata.house_frontend_internship
+# [nata.house](https://natahouse.com/) frontend internship
