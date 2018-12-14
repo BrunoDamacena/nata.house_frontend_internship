@@ -60,7 +60,7 @@ class App extends Component {
                   else if(this.state.order[0] === -1) {
                     this.setState({persons: originalData, order: [0, 0, 0, 0, 0, 0]});
                   }
-                }}>Name {this.state.order[0]}</TableCell>
+                }}><a href="#">Name {this.state.order[0]}</a></TableCell>
                 <TableCell onClick={() => {
                   if(this.state.order[1] === 0) {
                     sortByIndex('address', 1);
