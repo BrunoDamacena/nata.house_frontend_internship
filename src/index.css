@@ -8,12 +8,54 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1, footer {
+  text-align: center;
+}
+
+footer {
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: lightgray;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-table, th, td {
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid black;
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(odd) {
+  background-color: #dddddd;
+}
+
+a {
+  text-decoration: none;
+}
+
+.link-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+th {
+  background: #ffffff;
+  cursor: pointer;
 }
