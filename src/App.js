@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,7 +8,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import data from './data.json';
-console.log(data);
+//make a copy of original data, for purposes of desorting
+//I could set an id for every person on data, but i preferred that way
+var originalData = data.slice();
 const styles = theme => ({
   root: {
     width: '100%',
@@ -21,19 +22,10 @@ const styles = theme => ({
   },
 });
 
-var actualIndex = '';
-
-function compare(a, b) {
-  if(a[actualIndex] > b[actualIndex]) return 1;
-  if(a[actualIndex] < b[actualIndex]) return -1;
-  return 0;
-}
-
 function sortByIndex(index, order) {
-  actualIndex = index;
   data.sort(function(a,b) {
-    if(a[actualIndex] > b[actualIndex]) return order;
-    if(a[actualIndex] < b[actualIndex]) return -1 * order
+    if(a[index] > b[index]) return order;
+    if(a[index] < b[index]) return -1 * order
   return 0;
   });
 }
@@ -44,7 +36,7 @@ class App extends Component {
     super(props);
     this.state = {
       persons: data,
-      order: 1
+      order: [0,0,0,0,0,0]
     }
   }
 
@@ -56,12 +48,84 @@ class App extends Component {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell onClick={() => {sortByIndex('name', this.state.order); this.setState({persons: data, order: -1 * this.state.order})}}>Name</TableCell>
-                <TableCell onClick={() => {sortByIndex('address', this.state.order); this.setState({persons: data, order: -1 * this.state.order})}}>Address</TableCell>
-                <TableCell onClick={() => {sortByIndex('city', this.state.order); this.setState({persons: data, order: -1 * this.state.order})}}>City</TableCell>
-                <TableCell onClick={() => {sortByIndex('region', this.state.order); this.setState({persons: data, order: -1 * this.state.order})}}>Region</TableCell>
-                <TableCell onClick={() => {sortByIndex('country', this.state.order); this.setState({persons: data, order: -1 * this.state.order})}}>Country</TableCell>
-                <TableCell onClick={() => {sortByIndex('birthday', this.state.order); this.setState({persons: data, order: -1 * this.state.order})}}>Birthday</TableCell>
+                <TableCell onClick={() => {
+                  if(this.state.order[0] === 0) {
+                    sortByIndex('name', 1);
+                    this.setState({persons: data, order: [1, 0, 0, 0, 0, 0]});
+                  }
+                  else if(this.state.order[0] === 1) {
+                    sortByIndex('name', -1);
+                    this.setState({persons: data, order: [-1, 0, 0, 0, 0, 0]});
+                  }
+                  else if(this.state.order[0] === -1) {
+                    this.setState({persons: originalData, order: [0, 0, 0, 0, 0, 0]});
+                  }
+                }}>Name {this.state.order[0]}</TableCell>
+                <TableCell onClick={() => {
+                  if(this.state.order[1] === 0) {
+                    sortByIndex('address', 1);
+                    this.setState({persons: data, order: [0, 1, 0, 0, 0, 0]});
+                  }
+                  else if(this.state.order[1] === 1) {
+                    sortByIndex('address', -1);
+                    this.setState({persons: data, order: [0, -1, 0, 0, 0, 0]});
+                  }
+                  else if(this.state.order[1] === -1) {
+                    this.setState({persons: originalData, order: [0, 0, 0, 0, 0, 0]});
+                  }
+                }}>Address {this.state.order[1]}</TableCell>
+                <TableCell onClick={() => {
+                  if(this.state.order[2] === 0) {
+                    sortByIndex('city', 1);
+                    this.setState({persons: data, order: [0, 0, 1, 0, 0, 0]});
+                  }
+                  else if(this.state.order[2] === 1) {
+                    sortByIndex('city', -1);
+                    this.setState({persons: data, order: [0, 0, -1, 0, 0, 0]});
+                  }
+                  else if(this.state.order[2] === -1) {
+                    this.setState({persons: originalData, order: [0, 0, 0, 0, 0, 0]});
+                  }
+                }}>City {this.state.order[2]}</TableCell>
+                <TableCell onClick={() => {
+                  if(this.state.order[3] === 0) {
+                    sortByIndex('region', 1);
+                    this.setState({persons: data, order: [0, 0, 0, 1, 0, 0]});
+                  }
+                  else if(this.state.order[3] === 1) {
+                    sortByIndex('region', -1);
+                    this.setState({persons: data, order: [0, 0, 0, -1, 0, 0]});
+                  }
+                  else if(this.state.order[3] === -1) {
+                    this.setState({persons: originalData, order: [0, 0, 0, 0, 0, 0]});
+                  }
+                }}>Region {this.state.order[3]}</TableCell>
+                <TableCell onClick={() => {
+                  if(this.state.order[4] === 0) {
+                    sortByIndex('country', 1);
+                    this.setState({persons: data, order: [0, 0, 0, 0, 1, 0]});
+                  }
+                  else if(this.state.order[4] === 1) {
+                    sortByIndex('country', -1);
+                    this.setState({persons: data, order: [0, 0, 0, 0, -1, 0]});
+                  }
+                  else if(this.state.order[4] === -1) {
+                    this.setState({persons: originalData, order: [0, 0, 0, 0, 0, 0]});
+                  }
+                }}>Country {this.state.order[4]}</TableCell>
+                <TableCell onClick={() => {
+                  if(this.state.order[5] === 0) {
+                    sortByIndex('birthday', 1);
+                    this.setState({persons: data, order: [0, 0, 0, 0, 0, 1]});
+                  }
+                  else if(this.state.order[5] === 1) {
+                    sortByIndex('birthday', -1);
+                    this.setState({persons: data, order: [0, 0, 0, 0, 0, -1]});
+                  }
+                  else if(this.state.order[5] === -1) {
+                    this.setState({persons: originalData, order: [0, 0, 0, 0, 0, 0]});
+                  }
+                }}>Birthday {this.state.order[5]}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
