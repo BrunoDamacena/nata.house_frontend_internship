@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import data from './data.json';
+console.log(data);
 const styles = theme => ({
   root: {
     width: '100%',
@@ -20,7 +21,33 @@ const styles = theme => ({
   },
 });
 
+var actualIndex = '';
+
+function compare(a, b) {
+  if(a[actualIndex] > b[actualIndex]) return 1;
+  if(a[actualIndex] < b[actualIndex]) return -1;
+  return 0;
+}
+
+function sortByIndex(index, order) {
+  actualIndex = index;
+  data.sort(function(a,b) {
+    if(a[actualIndex] > b[actualIndex]) return order;
+    if(a[actualIndex] < b[actualIndex]) return -1 * order
+  return 0;
+  });
+}
+
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      persons: data,
+      order: 1
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -29,17 +56,17 @@ class App extends Component {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Address</TableCell>
-                <TableCell>City</TableCell>
-                <TableCell>Region</TableCell>
-                <TableCell>Country</TableCell>
-                <TableCell>Birthday</TableCell>
+                <TableCell onClick={() => {sortByIndex('name', this.state.order); this.setState({persons: data, order: -1 * this.state.order})}}>Name</TableCell>
+                <TableCell onClick={() => {sortByIndex('address', this.state.order); this.setState({persons: data, order: -1 * this.state.order})}}>Address</TableCell>
+                <TableCell onClick={() => {sortByIndex('city', this.state.order); this.setState({persons: data, order: -1 * this.state.order})}}>City</TableCell>
+                <TableCell onClick={() => {sortByIndex('region', this.state.order); this.setState({persons: data, order: -1 * this.state.order})}}>Region</TableCell>
+                <TableCell onClick={() => {sortByIndex('country', this.state.order); this.setState({persons: data, order: -1 * this.state.order})}}>Country</TableCell>
+                <TableCell onClick={() => {sortByIndex('birthday', this.state.order); this.setState({persons: data, order: -1 * this.state.order})}}>Birthday</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {
-                data.map(person => {
+                this.state.persons.map(person => {
                   return (
                     <TableRow>
                       <TableCell>{person.name}</TableCell>
